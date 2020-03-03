@@ -1,0 +1,86 @@
+service: de-azure-ad-api
+provider:
+  name: azure
+  runtime: nodejs10.x
+  apim:
+    cors:
+      allowCredentials: false
+      allowedOrigins:
+        - '*'
+      allowedMethods:
+        - GET
+        - POST
+        - PUT
+        - DELETE
+        - PATCH
+      allowedHeaders:
+        - '*'
+      exposeHeaders:
+        - '*'
+plugins:
+  - serverless-azure-functions
+  - serverless-dotenv-plugin
+package:
+  exclude:
+    - local.settings.json
+    - host.json
+    - .vscode/**
+    - .env
+    - .eslintrc.json
+    - .gitignore
+functions:
+  ip:
+    handler: src/handlers/common.ip
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+    name: de-azure-ad-api-dev-ip
+  bip:
+    handler: src/handlers/common.bip
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+    name: de-azure-ad-api-dev-bip
+  backup-users:
+    handler: src/handlers/backup.users
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+          route: backup/users
+    name: de-azure-ad-api-dev-backup-users
+  users:
+    handler: src/handlers/users.getAll
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+    name: de-azure-ad-api-dev-users
+  user:
+    handler: src/handlers/users.get
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+    name: de-azure-ad-api-dev-user
+  profile:
+    handler: src/handlers/users.syncProfilePhoto
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - PUT
+          authLevel: anonymous
+    name: de-azure-ad-api-dev-profile-users
