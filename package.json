@@ -10,7 +10,7 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
-    "serverless": "^1.62.0",
+    "serverless": "^3.25.1",
     "serverless-azure-functions": "^1.0.0",
     "serverless-dotenv-plugin": "^2.1.1"
   }
